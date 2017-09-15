@@ -8,6 +8,8 @@
 
 #import "SHCollectionViewFlowlayout.h"
 
+
+
 @implementation SHCollectionViewFlowlayout
 
 #define ZOOM_FACTOR 0.35
@@ -17,12 +19,11 @@
     [super prepareLayout];
     
     self.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    self.itemSize = CGSizeMake(160, 160);
+   // self.itemSize = CGSizeMake(120, 120);
     self.minimumLineSpacing = 30;
-    
     CGFloat inset = (self.collectionView.bounds.size.width - 120) * 0.5;
     self.sectionInset =  UIEdgeInsetsMake(0, inset, 0, inset);
-
+    
 }
 
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)oldBounds{
@@ -106,6 +107,7 @@
     
     return proposedContentOffset;
 }
+
 
 - (CGSize)collectionViewContentSize{
   return  [super collectionViewContentSize];

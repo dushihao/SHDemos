@@ -26,12 +26,13 @@
     SHCollectionViewFlowlayout *layout = [[SHCollectionViewFlowlayout alloc]init];
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     layout.minimumLineSpacing = 30;
-    layout.sectionInset = UIEdgeInsetsMake(10, 0, 0, 0);
+    layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
     layout.itemSize = CGSizeMake(160, 160);
+    
     self.collectionView.collectionViewLayout = layout;
     
     self.collectionView.dataSource = self;
-
+    self.collectionView.delegate= self;
 }
 
 #pragma mark - <UICollectionViewDatasource>
@@ -45,7 +46,12 @@
     return cell;
 }
 
-
+//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+//    
+//    CGFloat width = 120;
+//    CGFloat height = 130 + arc4random() % 41 ;
+//    return CGSizeMake(width, height);
+//}
 
 
 
