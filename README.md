@@ -1,6 +1,6 @@
 # SHDemos
 记录平时写的小demo
-##LayoutButton 
+## LayoutButton 
 ### 使用
 ```
     self.imagePositionButton = [[LayoutButton alloc] init];
