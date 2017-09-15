@@ -28,7 +28,7 @@
 
 
 - (IBAction)rightButtonClick:(id)sender {
-   // 流式布
+   // 流式布局☺
     
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     SecondViewController *pushVC = [mainStoryboard instantiateViewControllerWithIdentifier:@"SecondViewController"];
