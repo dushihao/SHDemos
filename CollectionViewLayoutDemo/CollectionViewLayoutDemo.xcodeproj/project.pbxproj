@@ -75,12 +75,9 @@
 				818166651F556A8300E4A760 /* Main.storyboard */,
 				818166B41F556AC800E4A760 /* ViewController.h */,
 				818166B51F556AC800E4A760 /* ViewController.m */,
-				818166B61F556AC800E4A760 /* MKMasonryViewLayout.h */,
-				818166B71F556AC800E4A760 /* MKMasonryViewLayout.m */,
+				B77D6289260ADF960038CABE /* Layout */,
 				818166BA1F556AD100E4A760 /* SecondViewController.h */,
 				818166BB1F556AD100E4A760 /* SecondViewController.m */,
-				818166BC1F556AD100E4A760 /* SHCollectionViewFlowlayout.h */,
-				818166BD1F556AD100E4A760 /* SHCollectionViewFlowlayout.m */,
 				818166C01F556ADD00E4A760 /* DSHCollectionViewCell.h */,
 				818166C11F556ADD00E4A760 /* DSHCollectionViewCell.m */,
 				8181665A1F556A7400E4A760 /* Assets.xcassets */,
@@ -97,6 +94,17 @@
 				8181664F1F556A7400E4A760 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B77D6289260ADF960038CABE /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				818166B61F556AC800E4A760 /* MKMasonryViewLayout.h */,
+				818166B71F556AC800E4A760 /* MKMasonryViewLayout.m */,
+				818166BC1F556AD100E4A760 /* SHCollectionViewFlowlayout.h */,
+				818166BD1F556AD100E4A760 /* SHCollectionViewFlowlayout.m */,
+			);
+			name = Layout;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,6 +147,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -325,6 +334,7 @@
 				818166641F556A7400E4A760 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -68,7 +68,16 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     DSHCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"DSHCollectionViewCell" forIndexPath:indexPath];
+    cell.backgroundColor = [self randomColor];
     return cell;
+}
+
+- (UIColor *)randomColor {
+    CGFloat red = (arc4random() % 256) / 255.0;
+    CGFloat green = (arc4random() % 256) / 255.0;
+    CGFloat blue = (arc4random() % 256) / 255.0;
+    UIColor *randomColor = [UIColor colorWithRed:red green:green blue:blue alpha:1];
+    return randomColor;
 }
 
 

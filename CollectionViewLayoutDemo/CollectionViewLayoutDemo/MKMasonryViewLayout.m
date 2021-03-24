@@ -16,8 +16,7 @@
 
 @implementation MKMasonryViewLayout
 
--(void) prepareLayout {
-    
+- (void)prepareLayout {
     self.numberOfColumns = 3;
     self.interItemSpacing = 12.5;
     
@@ -42,10 +41,7 @@
             CGFloat x = self.interItemSpacing + (self.interItemSpacing + itemWidth) * currentColumn;
             CGFloat y = [self.lastYValueForColumn[@(currentColumn)] doubleValue];
             
-            CGFloat height = [((id<MKMasonryViewLayoutDelegate>)self.collectionView.delegate)
-                              collectionView:self.collectionView
-                              layout:self
-                              heightForItemAtIndexPath:indexPath];
+            CGFloat height = [((id<MKMasonryViewLayoutDelegate>)self.collectionView.delegate) collectionView:self.collectionView layout:self heightForItemAtIndexPath:indexPath];
             
             itemAttributes.frame = CGRectMake(x, y, itemWidth, height);
             y+= height;
@@ -66,8 +62,8 @@
     
     [self.layoutInfo enumerateKeysAndObjectsUsingBlock:^(NSIndexPath *indexPath,
                                                          UICollectionViewLayoutAttributes *attributes,
-                                                         BOOL *stop) {
-        
+                                                         BOOL *stop)
+    {
         if (CGRectIntersectsRect(rect, attributes.frame)) {
             [allAttributes addObject:attributes];
         }
@@ -75,16 +71,14 @@
     return allAttributes;
 }
 
--(CGSize) collectionViewContentSize {
+- (CGSize)collectionViewContentSize {
     
     NSUInteger currentColumn = 0;
     CGFloat maxHeight = 0;
     do {
-        
         CGFloat height = [self.lastYValueForColumn[@(currentColumn)] doubleValue];
         if(height > maxHeight) maxHeight = height;
         currentColumn ++;
-        
     } while (currentColumn < self.numberOfColumns);
     
     return CGSizeMake(self.collectionView.frame.size.width, maxHeight);
