@@ -63,12 +63,8 @@ static NSTimeInterval const kInsertAnimationDration = 0.5;
     _dynamicAnimator = [[UIDynamicAnimator alloc]initWithReferenceView:self];
 }
 
-
-
-
 #pragma mark - 刷新数据
-- (void)reloadData{
-    
+- (void)reloadData {
     [self.visibleCards makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [self.visibleCards removeAllObjects];
     [self.reusableCardCache removeAllObjects];
@@ -97,8 +93,7 @@ static NSTimeInterval const kInsertAnimationDration = 0.5;
 }
 
 #pragma mark - 创建卡片
-- (UIView *)_getAndAppendCardForIndex:(NSUInteger)index{
-    
+- (UIView *)_getAndAppendCardForIndex:(NSUInteger)index {
     UIView *card = [self.datasource cardView:self viewForCardAtIndex:index];
     NSAssert(card, @"[SHCardViewDataSource cardView:viewForCardAtIndex: 方法不能返回nil" );
     [self insertSubview:card atIndex:0];
@@ -106,16 +101,11 @@ static NSTimeInterval const kInsertAnimationDration = 0.5;
     return card;
 }
 
-- (UIView<SHCardViewReuseableCard> *)dequeueReusrIdentifier:(NSString *)identifier{
-    
+- (UIView<SHCardViewReuseableCard> *)dequeueReuseIdentifier:(NSString *)identifier {
     NSMutableSet<SHReusableCard *> *cacheForIdentifier = self.reusableCardCache[identifier];
     
-    if (!cacheForIdentifier) {
-        return nil;
-    }
-    if (cacheForIdentifier.count == 0) {
-        return nil;
-    }
+    if (!cacheForIdentifier) { return nil; }
+    if (cacheForIdentifier.count == 0) { return nil; }
     
     SHReusableCard *card = [cacheForIdentifier anyObject];
     [card prepareForReuse];
@@ -126,12 +116,25 @@ static NSTimeInterval const kInsertAnimationDration = 0.5;
 
 #pragma mark - 配置卡片
 
-- (void)_setupConstraintsForCard:(UIView *)card{
-    
+- (void)_setupConstraintsForCard:(UIView *)card {
+    // NSLayoutAnchor 布局方式
     if (card.translatesAutoresizingMaskIntoConstraints) {
-        
         card.translatesAutoresizingMaskIntoConstraints = NO;
         CGFloat constants[] = {CGRectGetWidth(card.bounds),CGRectGetHeight(card.bounds)};
+        [card.widthAnchor constraintEqualToConstant:constants[0]].active = YES;
+        [card.heightAnchor constraintEqualToConstant:constants[1]].active = YES;
+    }
+    [card.centerXAnchor constraintEqualToAnchor:self.centerXAnchor].active = YES;
+    [card.centerYAnchor constraintEqualToAnchor:self.centerYAnchor].active = YES;
+    
+    /**
+     * NSLayoutConstraint 布局方式
+    if (card.translatesAutoresizingMaskIntoConstraints) {
+        card.translatesAutoresizingMaskIntoConstraints = NO;
+        CGFloat constants[] = {CGRectGetWidth(card.bounds),CGRectGetHeight(card.bounds)};
+
+        // NSLayoutConstraint 布局方式
+        
         NSLayoutAttribute attributes[] = {NSLayoutAttributeWidth,NSLayoutAttributeHeight};
         for (NSUInteger i = 0; i<2; ++i) {
             [NSLayoutConstraint constraintWithItem:card attribute:attributes[i]
@@ -143,41 +146,37 @@ static NSTimeInterval const kInsertAnimationDration = 0.5;
     for (NSUInteger i = 0; i<2; ++i) {
         [NSLayoutConstraint constraintWithItem:card attribute:attributes[i] relatedBy:NSLayoutRelationEqual toItem:self attribute:attributes[i] multiplier:1 constant:0].active = YES;
     }
+     */
 }
 
-- (void)_configureVisibleCard{
-    
+- (void)_configureVisibleCard {
     [self.visibleCards enumerateObjectsUsingBlock:^(UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [self _configureCard:obj atIndex:idx];
     }];
 }
 
-- (void)_configureCard:(UIView *)card atIndex:(NSUInteger)index{
-    
+- (void)_configureCard:(UIView *)card atIndex:(NSUInteger)index {
     // 随着索引变化，透明度变化30% 水平缩放10% 向下平移 10点
     card.alpha = 1 - 0.3 * index;
     card.transform = CGAffineTransformMake(1-0.1*index, 0, 0, 1, 0, 10*index);
 }
 
 #pragma mark - 卡片光栅化
-- (void)_enableTopCardRasterize{
-    
+- (void)_enableTopCardRasterize {
     UIView *topCard = [self topCard];
     NSAssert(topCard, @"topCard 不存在");
     topCard.layer.shouldRasterize = YES;
     topCard.layer.rasterizationScale = [[UIScreen mainScreen] scale];
 }
 
-- (void)_disableTopCardRasterize{
-    
+- (void)_disableTopCardRasterize {
     UIView *topCard = [self topCard];
     NSAssert(topCard, @"topCard 不存在");
     topCard.layer.shouldRasterize = NO;
 }
 
 #pragma mark - 拖拽处理
-- (void)_panGestureHandle:(UIPanGestureRecognizer *)panGR{
-    
+- (void)_panGestureHandle:(UIPanGestureRecognizer *)panGR {
     switch (panGR.state) {
         case UIGestureRecognizerStateBegan:
             {
@@ -243,8 +242,7 @@ static NSTimeInterval const kInsertAnimationDration = 0.5;
     }
 }
 
-- (void)_setupAttachmentBehaviorForTopCard{
-    
+- (void)_setupAttachmentBehaviorForTopCard {
     UIView *topCard = [self topCard];
     NSAssert(topCard, @"topCard 不存在");
     
@@ -258,8 +256,7 @@ static NSTimeInterval const kInsertAnimationDration = 0.5;
     [self.dynamicAnimator addBehavior:self.attachmentBehavior];
 }
 
-- (void)_updateTopCardPositionBypan{
-    
+- (void)_updateTopCardPositionBypan {
     UIView *topCard = [self topCard];
     NSAssert(topCard, @"topCard 不存在");
     NSAssert(self.attachmentBehavior, @"attachmentBehavior 属性为nil");
@@ -275,16 +272,14 @@ static NSTimeInterval const kInsertAnimationDration = 0.5;
     }
 }
 
-- (void)_removeAllBehaviors{
-    
+- (void)_removeAllBehaviors {
     self.attachmentBehavior = nil;
     [self.dynamicAnimator removeAllBehaviors];
 }
 
 #pragma mark - 复原卡片
 
-- (void)_resetTopCard{
-    
+- (void)_resetTopCard {
     UIView *topCard = [self topCard];
     NSAssert(topCard, @"topcard 不存在");
     NSAssert(self.dynamicAnimator.behaviors.count == 0, @"尚未清空 Dynamic Behavior.");
@@ -312,8 +307,7 @@ static NSTimeInterval const kInsertAnimationDration = 0.5;
 
 #pragma mark - 移除卡片
 
-- (void)_throwTopCardWithDynamicBehavior:(UIDynamicBehavior *)dynamicBehavior{
-    
+- (void)_throwTopCardWithDynamicBehavior:(UIDynamicBehavior *)dynamicBehavior {
     UIView *topCard = [self topCard];
     NSAssert(topCard, @"topCard 不存在");
     NSAssert(self.dynamicAnimator.behaviors.count == 0, @"尚未清空 Dynamic Behavior");
@@ -339,8 +333,7 @@ static NSTimeInterval const kInsertAnimationDration = 0.5;
     [self.dynamicAnimator addBehavior:dynamicBehavior];
 }
 
-- (void)throwTopCardOnDirection:(SHCardViewDirection)direction angle:(CGFloat)angle{
-    
+- (void)throwTopCardOnDirection:(SHCardViewDirection)direction angle:(CGFloat)angle {
     UIView *topCard = [self topCard];
     NSAssert(topCard, @"topCard 不存在.");
     
@@ -368,8 +361,7 @@ static NSTimeInterval const kInsertAnimationDration = 0.5;
 }
 
 #pragma mark - 回收卡片
-- (void)_recycleThrowedCard{
-    
+- (void)_recycleThrowedCard {
     SHReusableCard *topCard = [self topCard];
     NSAssert(topCard, @"topCard不存在");
     
@@ -382,9 +374,7 @@ static NSTimeInterval const kInsertAnimationDration = 0.5;
 }
 
 #pragma mark - 更新卡片
-
-- (void)_updateVisibleCardAfterThrow{
-    
+- (void)_updateVisibleCardAfterThrow {
     UIView *topCard = [self topCard];
     NSAssert(topCard, @"topCard 不存在.");
     
@@ -427,18 +417,18 @@ static NSTimeInterval const kInsertAnimationDration = 0.5;
 
 #pragma mark - 拖拽相关
 
-- (void)setDragEnabled:(BOOL)dragEnabled{
+- (void)setDragEnabled:(BOOL)dragEnabled {
     _dragEnabled = dragEnabled;
     self.panGestureRecognizer.enabled = dragEnabled;
 }
 
 #pragma mark - 卡片信息
 
-- (UIView *)topCard{
+- (UIView *)topCard {
     return self.visibleCards.firstObject;
 }
 
-- (NSUInteger)countOfVisibleCards{
+- (NSUInteger)countOfVisibleCards {
     return self.visibleCards.count;
 }
 

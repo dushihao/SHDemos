@@ -54,7 +54,7 @@
 {
     NSLog(@"%@ - %@", @(__FUNCTION__), @(index));
     
-    SHTestCardView *card = [cardView dequeueReusrIdentifier:@"SHTestCardView"];
+    SHTestCardView *card = [cardView dequeueReuseIdentifier:@"SHTestCardView"];
     if (!card) {
         card = [SHTestCardView testCardView];
         card.frame = ({

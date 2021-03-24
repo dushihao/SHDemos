@@ -71,7 +71,7 @@ typedef UIView<SHCardViewReuseableCard> SHReusableCard;
 /// 刷新数据
 - (void)reloadData;
 /// 从重用池重用卡片
-- (nullable __kindof SHReusableCard *)dequeueReusrIdentifier:(NSString *_Nullable)identifier;
+- (nullable __kindof SHReusableCard *)dequeueReuseIdentifier:(NSString *_Nullable)identifier;
 
 - (void)throwTopCardOnDirection:(SHCardViewDirection)direction angle:(CGFloat)angle;
 
