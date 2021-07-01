@@ -9,11 +9,12 @@
 #import <UIKit/UIKit.h>
 @class MKMasonryViewLayout;
 
-@protocol MKMasonryViewLayoutDelegate <NSObject>
+@protocol MKMasonryViewLayoutDelegate <NSObject, UICollectionViewDelegateFlowLayout>
 @required
-- (CGFloat) collectionView:(UICollectionView*) collectionView
-                    layout:(MKMasonryViewLayout*) layout
-  heightForItemAtIndexPath:(NSIndexPath*) indexPath;
+- (CGFloat) collectionView:(UICollectionView*) collectionView layout:(MKMasonryViewLayout*) layout heightForItemAtIndexPath:(NSIndexPath*) indexPath;
+
+- (CGSize)collection:(UICollectionView *)collectionView sizeForSupplementaryViewOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath;
+
 @end
 
 @interface MKMasonryViewLayout : UICollectionViewLayout

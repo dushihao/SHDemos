@@ -56,8 +56,9 @@
     self.collectionView.delegate = self;
     [self.collectionView reloadData];
     
-    
     self.collectionView.dataSource = self;
+    [self.collectionView registerClass:UICollectionReusableView.class forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"reusedheader"];
+    [self.collectionView registerClass:UICollectionReusableView.class forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"reusedfooter"];
 }
 
 #pragma mark - <UICollectionViewDatasource>
@@ -69,6 +70,7 @@
     
     DSHCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"DSHCollectionViewCell" forIndexPath:indexPath];
     cell.backgroundColor = [self randomColor];
+    cell.textLabel.text = [NSString stringWithFormat:@"%ld-%ld", (long)indexPath.section, (long)indexPath.row];
     return cell;
 }
 
@@ -83,6 +85,10 @@
 
 #pragma mark - <UICollectionViewDelegateFlowLayout>
 
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 2;
+}
+
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     CGFloat height = arc4random()%100 + 50 ;
@@ -90,13 +96,29 @@
 }
 
 // this will be called if our layout is MKMasonryViewLayout
-- (CGFloat) collectionView:(UICollectionView*) collectionView
-                    layout:(MKMasonryViewLayout*) layout
-  heightForItemAtIndexPath:(NSIndexPath*) indexPath {
-    
+- (CGFloat) collectionView:(UICollectionView*) collectionView layout:(MKMasonryViewLayout*) layout heightForItemAtIndexPath:(NSIndexPath*) indexPath {
     // we will use a random height from 100 - 400
-    
     CGFloat randomHeight = 100 + (arc4random() % 140);
     return randomHeight;
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
+        UICollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"reusedheader" forIndexPath:indexPath];
+        view.backgroundColor = UIColor.redColor;
+        return view;
+    } else {
+        UICollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"reusedfooter" forIndexPath:indexPath];
+        view.backgroundColor = UIColor.yellowColor;
+        return view;
+    }
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
+    return CGSizeMake(UIScreen.mainScreen.bounds.size.width, 50);
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    return CGSizeMake(UIScreen.mainScreen.bounds.size.width, 50);
 }
 @end

@@ -12,6 +12,7 @@
 @interface DSHCollectionViewCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet  DSHScrollView *scrollView;
 
+@property (weak, nonatomic) IBOutlet UILabel *textLabel;
 
 
 @end
